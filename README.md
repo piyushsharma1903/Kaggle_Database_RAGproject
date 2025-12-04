@@ -1,44 +1,108 @@
 ﻿# personal_project_RAG_1
 
 <img width="1072" height="95" alt="image" src="https://github.com/user-attachments/assets/97269e56-2bab-4d33-b272-bec6ee96a5ea" />
-# 🧠 Retrieval-Augmented Generation (RAG) – Basics
+🚀 Medical RAG System (MongoDB + Sentence Transformers + DeepSeek)
 
-A simple, clean RAG pipeline implemented in Python using:
+A lightweight Retrieval-Augmented Generation (RAG) pipeline built on top of:
 
-- MongoDB Atlas (Vector DB)
-- SentenceTransformer for text embeddings
-- DeepSeek API for text generation
-- pymongo for DB operations
+SentenceTransformer embeddings (MiniLM-L6-v2)
 
-This project demonstrates how to build your own RAG system without any framework like LangChain or LlamaIndex — just raw Python and simple logic.
+MongoDB Atlas Vector Search
 
----
+DeepSeek Chat API
 
-## 🚀 Features
+Python backend (custom pipeline)
 
-✔ Store user text in MongoDB  
-✔ Generate vector embeddings for text  
-✔ Store embeddings along with text  
-✔ Perform semantic search using MongoDB Vector Index  
-✔ Generate AI responses using DeepSeek  
-✔ Clean and minimal codebase  
-✔ Split database setup (optional):  
-   - **DB1** → raw/original text  
-   - **DB2** → updated/AI-processed entries  
+The system allows semantic search over patient summaries and generates meaningful insights using LLM reasoning.
 
----
+⭐ Features
+🔹 1. End-to-End Data Pipeline
 
-## 📦 Tech Stack
+Clean medical dataset → structured summaries → embedding generation
 
-| Component | Technology |
-|----------|------------|
-| Environment | uv (Python virtual environment manager) |
-| Database | MongoDB Atlas |
-| Vector Embeddings | SentenceTransformer |
-| LLM | DeepSeek API |
-| Python Libraries | pymongo, requests, python-dotenv |
+Store vector embeddings in MongoDB Atlas
 
----
+Create a vector_index for fast similarity search
 
-## 📂 Project Structure
+🔹 2. Semantic Retrieval
+
+Given a natural language query like:
+
+“Who had abnormal test results for diabetes?”
+
+The system:
+
+Embeds the query
+
+Runs a vector search against MongoAtlas
+
+Returns the top-k most relevant patient summaries
+
+🔹 3. DeepSeek LLM Integration
+
+Retrieved chunks are passed to DeepSeek:
+
+with safety formatting
+
+with context window control
+
+with optional temperature tuning
+
+The model produces a final RAG answer.
+
+📦 Project Structure
+RAG/
+│
+├── embed_data.py          # create embeddings + summaries
+├── insert_to_mongo.py     # upload embeddings to Atlas
+├── search_mongo.py        # test semantic search pipeline
+├── rag_query.py           # full RAG pipeline (search + LLM)
+├── embedded_summaries.json
+├── cleaned_dataset.csv
+└── README.md
+
+⚙️ Tech Stack
+
+Python
+
+SentenceTransformer
+
+MongoDB Atlas Vector Search
+
+DeepSeek Chat API
+
+Requests
+
+Uvicorn (optional server)
+
+🧠 How It Works
+
+Dataset Cleaning
+
+Summaries Generated for Each Row
+
+Embeddings (384-dim) computed using MiniLM
+
+Stored in MongoDB
+
+Vector index created ($vectorSearch)
+
+Queries embedded → semantic search → top-K results
+
+DeepSeek produces final answer
+
+📝 Example Query
+Ask something: Who had abnormal test results for diabetes?
+
+
+Output:
+
+Top matches:
+1. Patient Christopher Velasquez...
+2. Patient Monica Collins...
+3. Patient Virginia Mercado...
+
+❤️ Status
+
+This project serves as the foundation for the more powerful Agentic RAG System.
 
